@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+        stages {
+            stage ('one') {
+                step {
+                    echo 'Hi This Demo Pipeline'
+                }
+            }
+            stage ('two') {
+                step {
+                    input ('do you want to procreed?')  
+                }
+            }
+            stage ('three') {
+                when {
+                    not {
+                        branch 'master'
+                    }
+                }
+                step {
+                    ehco 'hello'
+                }
+            }
+            stage ('four') {
+                parallel  {
+                    stage ('unit test') {
+                        step {
+                            echo 'running the unit test'
+                        }
+                    }
+                    stage ('Intergration test') {
+                        agent {
+                            docker {
+                                reuseNode false
+                                image 'ubuntu'
+                            }
+                        }
+                        steps {
+                            echo ('running the intergration test')
+                        }
+                    }
+                }
+            }        
+        }
+}
