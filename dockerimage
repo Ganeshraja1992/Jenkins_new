@@ -1,5 +1,5 @@
 mkdir dockerimage
 cd dockerimage
-mv clean install
+mvn clean install
 docker build -t raja1508/ganesh:docker_jenkins
 docker push raja1508/ganesh:docker_jenkins
